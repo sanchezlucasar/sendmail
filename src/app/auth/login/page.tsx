@@ -25,56 +25,52 @@ function LoginPage() {
 
     return (
         <div className="h-[calc(100vh - 7rem)] flex justify-center item - center" >
+            <div className="hero min-h-screen bg-base-200">
+                <div className="hero-content flex-col lg:flex-row-reverse">
+                    <div className="text-center lg:text-left">
+                        <h1 className="text-5xl font-bold">Login now!</h1>
+                        <p className="py-6">¡Bienvenido de nuevo! Ingresa tus credenciales para acceder.</p>
+                    </div>
+                    <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                        <form
+                            onSubmit={onSubmit}
+                            className="card-body"
+                        >
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Email</span>
 
-            <form
-                onSubmit={onSubmit}
-                className="w-1/4"
-            >
-                {(error) && (
-                    <p className="bg-red-500 text-lg text-white p-3 rounded mb-2">{error}</p>
-                )}
-                <h1 className="text-slate-200 font-bold text-4xl mb-4">Login</h1>
+                                </label>
+                                <input
+                                    type="email"
+                                    placeholder="email"
+                                    className="input input-bordered"
+                                    {...register("email")}
+                                    required
+                                />
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Password</span>
+                                </label>
+                                <input
+                                    type="password"
+                                    placeholder="password"
+                                    className="input input-bordered"
+                                    {...register("password")}
+                                    required
+                                />
 
-                <label htmlFor="email" className="text-slate-500 mb-2 block text-sm">
-                    Email</label>
-                <input type="text"
-                    {...register("email",
-                        {
-                            required: {
-                                value: true,
-                                message: "email is required"
-                            }
-                        })}
-                    className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
-                    placeholder="user@email.com"
-                />
-                {
-                    errors.email && errors.email.message && (
-                        <span className="text-red-500 text-sm">{(errors.email.message).toString()}</span>
-                    )
-                }
-                <label htmlFor="password" className="text-slate-500 mb-2 block text-sm">
-                    Password</label>
-                <input type="password"
-                    {...register("password",
-                        {
-                            required: {
-                                value: true,
-                                message: "password is required"
-                            }
-                        })}
-                    className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
-                    placeholder="**********"
-                />
-                {
-                    errors.password && errors.password.message && (
-                        <span className="text-red-500 text-sm">{(errors.password.message).toString()}</span>
-                    )
-                }
-                <button className="w-full bg-blue-500 text-white p-3 rounded-lg mt-2"
-                > Login </button>
-            </form>
+                            </div>
+                            <div className="form-control mt-6">
+                                <button className="btn btn-primary">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+
     )
 }
 
