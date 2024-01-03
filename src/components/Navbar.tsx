@@ -5,38 +5,45 @@ import { useSession } from "next-auth/react";
 function Navbar() {
     const { data: session } = useSession()
 
-    console.log(session);
+    console.log('aca la session', session);
 
     return (
-        <nav className="flex justify-between items-center bg-gray-950 text-white px-24 py-3">
-            <h1 className="text-xl font-bold">NextAuth</h1>
 
-            <ul className="flex gap-x-2">
-                {!session?.user ? (
-                    <>
-                        <li>
-                            <Link href="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link href="/auth/login">Login</Link>
-                        </li>
-                        <li>
-                            <Link href="/auth/register">Register</Link>
-                        </li>
-                    </>
-                ) : (
-                    <>
-                        <li>
-                            <Link href="/dashboard">Dashboard</Link>
-                        </li>
-                        <li>
-                            <Link href="/api/auth/signout">Logout</Link>
-                        </li>
-                    </>
-                )}
-            </ul>
-        </nav>
-    );
+
+        <div className="navbar bg-primary text-primary-content">
+            <div className="flex-1">
+                <a className="btn btn-ghost text-xl">Grupo 360!</a>
+            </div>
+            <div className="flex-none">
+                <ul className="menu menu-horizontal px-1 ">
+                    {session?.user ? (
+                        <>
+                            <li className="">  <Link href="/dashboard">Dashboard</Link></li>
+                            <li>  <Link href="/api/auth/signout">Logout</Link></li>
+                        </>
+                    ) : (
+                        <>
+                            <li>
+                                <details>
+                                    <summary>
+                                        Auth
+                                    </summary>
+                                    <ul style={{ color: 'black' }} className="p-2 rounded-t-none">
+                                        <li > <Link href="/auth/register">Register</Link></li>
+                                        <li> <Link href="/auth/login">Login</Link></li>
+                                    </ul>
+                                </details>
+                            </li>
+                        </>
+
+                    )
+                    }
+                </ul>
+            </div >
+        </div >
+
+
+    )
 }
 
 export default Navbar;
