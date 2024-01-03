@@ -1,24 +1,24 @@
 'use client'
 import { useForm } from "react-hook-form"
-import { useRouter } from 'next/navigation'
 
-
-function Contact() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const router = useRouter();
+const Contact = () => {
+    const { handleSubmit, register } = useForm();
 
     const onSubmit = handleSubmit(async (data: any) => {
-
         try {
+            console.log('aca la data', data);
+
             const res = await fetch('/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: data.name,
-                    toemail: data.toemail,
-                    message: data.message,
+                    from: data.nombre,
+                    to: data.to,
+                    cc: data.cc,
+                    text: data.mensaje,
+                    subject: data.asunto
                 }),
             });
 
@@ -34,71 +34,72 @@ function Contact() {
         }
 
     });
+
+    /*const fields = [
+        { nombreInput: "nombre", tipoCampo: "text", required: true },
+        { nombreInput: "email", tipoCampo: "text", required: true },
+        { nombreInput: "cc", tipoCampo: "text", required: false },
+        { nombreInput: "asunto", tipoCampo: "text", required: false },
+        { nombreInput: "mensaje", tipoCampo: "text", required: true },
+    ];*/
+
     return (
-        <div className="h-[calc(100vh - 7rem)] flex justify-center item - center" >
+        <section className="py-1 h-[calc(90vh-1rem)] flex justify-center items-center bg-primary-content" >
             <form
                 onSubmit={onSubmit}
-                className="w-1/4"
+                className="w-1/4 "
             >
-                <h1 className="text-slate-200 font-bold text-4xl mb-4">Send Email</h1>
+                <h1 className="text-slate-600 font-bold text-4xl mb-4">Enviar email</h1>
 
-                <label htmlFor="name" className="text-slate-500 mb-2 block text-sm">
-                    name</label>
+                <label htmlFor="nombre" className="text-slate-500 mb-2 block text-sm">
+                    Nombre</label>
                 <input type="text"
-                    {...register("name",
-                        {
-                            required: {
-                                value: true,
-                                message: "Username is required"
-                            }
-                        })}
-                    className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+                    {...register("nombre")}
+                    required
+                    className="p-3 rounded block mb-2 bg-slate-100 text-slate-300 w-full"
+                    placeholder="Ejemplo: Pepe"
                 />
-                {
-                    errors.username && errors.username.message && (
-                        <span className="text-red-500 text-sm">{(errors.username.message).toString()}</span>
-                    )
-                }
-                <label htmlFor="toemail" className="text-slate-500 mb-2 block text-sm">
-                    Email</label>
-                <input type="email"
-                    {...register("toemail",
-                        {
-                            required: {
-                                value: true,
-                                message: "Email is required"
-                            }
-                        })}
-                    className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
-                />
-                {
-                    errors.toemail && errors.toemail.message && (
-                        <span className="text-red-500 text-sm">{(errors.toemail.message).toString()}</span>
-                    )
-                }
-                <label htmlFor="message" className="text-slate-500 mb-2 block text-sm">
-                    Message</label>
+
+                <label htmlFor="to" className="text-slate-500 mb-2 block text-sm">
+                    Email's (separados por comas, sin espacios) </label>
                 <input type="text"
-                    {...register("message",
-                        {
-                            required: {
-                                value: true,
-                                message: "message is required"
-                            }
-                        })}
-                    className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
+                    {...register("to")}
+                    required
+                    className="p-3 rounded block mb-2 bg-slate-100 text-slate-300 w-full"
+                    placeholder="Ejemplo: correo1@example.com,correo2@example.com"
+
                 />
-                {
-                    errors.password && errors.password.message && (
-                        <span className="text-red-500 text-sm">{(errors.password.message).toString()}</span>
-                    )
-                }
+                <label htmlFor="cc" className="text-slate-500 mb-2 block text-sm">
+                    CC (separados por comas, sin espacios)</label>
+                <input type="text"
+                    {...register("cc")}
+
+                    className="p-3 rounded block mb-2 bg-slate-100 text-slate-300 w-full"
+                    placeholder="Ejemplo: correo1@example.com,correo2@example.com"
+
+                />
+                <label htmlFor="asunto" className="text-slate-500 mb-2 block text-sm">
+                    Asunto </label>
+                <input type="text"
+                    {...register("asunto")}
+                    required
+                    className="p-3 rounded block mb-2 bg-slate-100 text-slate-300 w-full"
+                    placeholder="Ejemplo: Servicio Nuevo"
+                />
+
+                <label htmlFor="mensaje" className="text-slate-500 mb-2 block text-sm">
+                    Mensaje</label>
+                <input type="text"
+                    required
+                    {...register("mensaje")}
+                    className=" p-3 rounded block mb-2  bg-slate-100 text-slate-300 w-full input-lg w-full "
+                />
 
                 <button className="w-full bg-blue-500 text-white p-3 rounded-lg mt-2"
-                > Send </button>
+                > Enviar </button>
             </form>
-        </div>
 
+        </section >
     )
 }
 
